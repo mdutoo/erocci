@@ -55,7 +55,7 @@ AC_DEFUN([AX_ERLANG_DEP],
 ],
 [
 if test x$2 = xyes; then
-    append_to_ERLCFLAGS "-I\$(top_srcdir)/deps/$1/include"
+    append_to_ERLCFLAGS "-I\$(top_srcdir)/deps/$1/include -pa \$(top_srcdir)/deps/$1/ebin"
     append_to_erlang_DEPS "$1"
 
     version=""

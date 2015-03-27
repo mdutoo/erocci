@@ -242,18 +242,24 @@ AC_CHECK_PROGS([REBAR], [rebar], [no])
 if test "$REBAR" = "no"; then
    AC_MSG_ERROR(['rebar' is required but can not be found])
 fi
+
 AC_CHECK_PROGS([MKDOCS], [mkdocs])
 if test ! x$MKDOCS = x; then
    enable_doc=yes
+   AC_ERLANG_CHECK_LIB([edoc])
 else
    enable_doc=no
+fi
+if test x$enable_doc = xyes; then
+   AX_ERLANG_DEP([edoc_mkdocs], [$enable_erlang_deps],
+   	         [git], [https://github.com/erocci/edoc_mkdocs.git])
 fi
 AM_CONDITIONAL([BUILDDOC], [test x$enable_doc = xyes])
 
 AS_IF([test x$enable_erlang_deps = xyes], [AC_CHECK_PROGS([GIT], [git])])
 
 if test "$check_ei" = "1"; then
-     AC_ERLANG_CHECK_LIB([erl_interface])
+   AC_ERLANG_CHECK_LIB([erl_interface])
    AC_SUBST([ERL_CFLAGS], ["-I${ERLANG_ROOT_DIR}/erts-${ERLANG_ERTS_VER}/include -I${ERLANG_LIB_DIR_erl_interface}/include"])
    AC_SUBST([ERL_LDFLAGS], ["-L${ERLANG_LIB_DIR_erl_interface}/lib -lerl_interface -lei"])
 fi

@@ -69,6 +69,7 @@ all-erlang: $(all_erlang_deps)
 	@if test -n "$(appdata)" -o "$(appports)"; then $(MAKE) $(appdata) $(appports); fi
 	@$(MAKE) all-first
 	@$(MAKE) all-beams
+	@$(MAKE) all-erlang-doc
 
 all-first: $(appfirst)
 
@@ -163,7 +164,7 @@ uninstall-erlang-app: $(uninstall_erlang_deps)
 ###
 ### Clean
 ###
-clean-erlang: $(clean_erlang_deps)
+clean-erlang: $(clean_erlang_deps) clean-erlang-doc
 	-rm -rf ebin/*
 	-for base in $(shell find $(srcdir)/src -name '*.xrl'); do \
 	  gen=`echo $$base | sed -e 's,\.xrl$$,.erl,'`; \
@@ -245,4 +246,17 @@ dist-ct:
 distclean-ct:
 	-rm -rf $(top_builddir)/log
 
-.PHONY: all-erlang all-first all-beams clean-erlang dist-erlang install-erlang-app uninstall-erlang-app distclean-ct test test-ct test-dir clean-ct dist-ct $(patsubst %,ct-%,$(erlang_CT_SUITES))
+###
+### doc
+###
+EDOC_OPTS={dir, "$(top_builddir)/doc/guide/docs"}, {packages, false}, {doclet, edoc_doclet_mkdocs}, {package_name, "$(PACKAGE_NAME)"}, {package_version, "$(PACKAGE_VERSION)"}, {package_bugreport, "$(PACKAGE_BUGREPORT)"}, {package_url, "$(PACKAGE_URL)"}
+doc_v = echo "  GEN-DOC "$(erlang_APP);
+
+all-erlang-doc:
+	@if test -e ebin/$(erlang_APP).app; then \
+	  $(doc_v) $(ERL) -noshell $(ERLCFLAGS) -pa $(top_builddir)/ebin -eval 'edoc:application($(erlang_APP), ".", [$(EDOC_OPTS)]), halt().'; \
+	fi
+
+clean-erlang-doc:
+
+.PHONY: all-erlang all-first all-beams clean-erlang dist-erlang install-erlang-app uninstall-erlang-app distclean-ct test test-ct test-dir clean-ct dist-ct $(patsubst %,ct-%,$(erlang_CT_SUITES)) all-erlang-doc clean-erlang-doc

@@ -21,6 +21,16 @@ test/*.beam
 /doc/erlang.png
 /doc/stylesheet.css
 /doc/utf8/
+/doc/guide/docs/occi
+/doc/guide/docs/occi_authnz
+/doc/guide/docs/occi_authnz_htpasswd
+/doc/guide/docs/occi_backend_fs
+/doc/guide/docs/occi_backend_mnesia
+/doc/guide/docs/occi_backend_dbus
+/doc/guide/docs/occi_backend_admin
+/doc/guide/docs/occi_core
+/doc/guide/docs/occi_listener_http
+/doc/guide/docs/occi_listener_xmpp
 /doc/guide/html/
 /doc/guide/mkdocs.yml
 /priv/Mnesia

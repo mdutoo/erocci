@@ -14,7 +14,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-SUBDIRS = apps doc test rel
+SUBDIRS = . apps doc test rel
 
 erlang_APP = occi
 erlang_MODULES = occi_app occi occi_log_handler
