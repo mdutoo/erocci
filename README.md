@@ -75,6 +75,12 @@ yum install erlang curl gcc libxml2-devel gcc-c++
 
 ### Configuring and Building
 
+(Optional) When updating, force refetching dependencies (including erocci modules) :
+
+```
+$ rm -rf deps
+```
+
 Configure sources and fetch dependencies:
 
 ```
